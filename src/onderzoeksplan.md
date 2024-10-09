@@ -1,5 +1,24 @@
-# Onderzoeksplan
+# Robuustheid voor Microservices
 
-Lees en volg de [workshop-prompt-engineering](https://minordevops.nl/week-5-slack-ops/workshop-onderzoeksplan-prompt-engineering.html).
+**Hoofdvraag:**  
+Hoe kan LitmusChaos efficiënt worden toegepast in een microservice applicatie?
 
-Verzin o.a. een titel voor je blog, pas de folder naam hier op aan en gebruik [kebab-case](https://en.toolpage.org/tool/kebabcase).
+**Deelvragen en Onderzoeksmethoden:**
+
+1. **Wat is chaos engineering?**  
+   _Onderzoeksmethode:_ Literatuuronderzoek
+
+2. **Hoe past LitmusChaos in het DevOps-landschap?**  
+   _Onderzoeksmethode:_ Documentanalyse
+
+3. **Wat zijn de alternatieven voor LitmusChaos?**  
+   _Onderzoeksmethode:_ Literatuuronderzoek
+
+4. **Wat zijn de voor- en nadelen van LitmusChaos?**  
+   _Onderzoeksmethode:_ Vergelijkend literatuuronderzoek
+
+5. **Hoe pas ik LitmusChaos in het klein toe?**  
+   _Onderzoeksmethode:_ Experiment
+
+6. **Hoe pas ik LitmusChaos toe in de PitStop MSA applicatie?**  
+   _Onderzoeksmethode:_ Literatuuronderzoek
