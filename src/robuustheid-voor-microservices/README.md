@@ -61,115 +61,46 @@ Enkele van de belangrijkste voor- en nadelen:
 
 ## Hoe pas ik LitmusChaos in het klein toe?
 
-In deze sectie gaan we aan de slag met LitmusChaos en voeren we een eenvoudig experiment uit.
+In dit hoofdstuk staat hoe LitmusChaos kan worden toegepast in een Kubernetes-omgeving door middel van een POC (Proof Of Concept).
 
 **Stap 1: Installatie van LitmusChaos**  
 Om LitmusChaos te installeren via YAML, kun je de volgende stappen volgen:
 
-1. **Maak de benodigde LitmusChaos-namespaces en services aan**:
+1. **Maak een Kubernetes namespace aan**:
 
-```yaml
-apiVersion: v1
-kind: Namespace
-metadata:
- name: litmus
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
- name: litmus-admin
- namespace: litmus
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
- name: litmus-admin
-roleRef:
- apiGroup: rbac.authorization.k8s.io
- kind: ClusterRole
- name: cluster-admin
-subjects:
- - kind: ServiceAccount
-   name: litmus-admin
-   namespace: litmus
-```
-   
-2. **Voeg de Litmus Chaos Operator toe**:
+`kubectl create ns litmus`
+
+2. **Installeer LitmusChaos op de namespace**:
     
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-   name: litmus-operator
-   namespace: litmus
-spec:
-    replicas: 1
-    selector:
-        matchLabels:
-            name: litmus-operator
-    template:
-        metadata:
-            labels:
-                name: litmus-operator
-        spec:
-            serviceAccountName: litmus-admin
-            containers:
-                - name: litmus-operator
-                  image: litmuschaos/chaos-operator:latest
-                  imagePullPolicy: Always
-```
+`kubectl apply -n litmus -f https://litmuschaos.github.io/litmus/2.0.0/litmus-2.0.0.yaml`
 
-Deze configuratie zorgt ervoor dat de chaos-operator wordt geïnstalleerd en in de litmus namespace draait.
+3. **Maak LitmusChaosCenter toegankelijk**:
+
+`kubectl port-forward svc/litmusportal-frontend-service -n litmus 30000:9091 --address 0.0.0.0`
+
+Op `http://localhost:3000` is nu een dashboard beschikbaar. Inloggen kan met de gebruikersnaam `admin` en het wachtwoord `litmus`.
 
 **Stap 2: Creëren van een Chaos Experiment**  
 
-Nu LitmusChaos is geïnstalleerd, kunnen we een basis experiment configureren om een pod in de frontend namespace te verstoren.
+Nu LitmusChaos is geïnstalleerd, kunnen we een basis experiment configureren om een pod in de namespace te verstoren. 
+Hiervoor gebruiken we een Predefined Workflow.
+Dit is en vooraf gedefinieerde reeks stappen die een specifieke verstoring veroorzaken.
 
-1. **Maak het experiment aan**:
+1. Select Workflow:
+   1. Klik op "Schedule a Workflow"
+   2. Kies "Self Agent" als target 
+   3. Kies "potato-head" als Predefined Workflow en klik op "Next"
+   
+2. Tune Experiment:
+   1. Pas de duur van de verstoring aan
+   2. Stel in wanneer de verstoring moet plaatsvinden
 
-```yaml
-apiVersion: litmuschaos.io/v1alpha1
-kind: ChaosExperiment
-metadata:
-  name: pod-delete
-  namespace: litmus
-spec:
-  definition:
-    scope: Namespaced
-    permissions:
-      - apiGroups:
-          - ""
-        resources:
-          - pods
-        verbs:
-          - delete
-    experiment: pod-delete
-    hypothesis: Verstoort een geselecteerde pod om de tolerantie van het systeem te testen.
-```
+De workflow is nu aangemaakt en te zien in het dashboard.
+![litmusworkflows.png](plaatjes%2Flitmusworkflows.png)
 
-2. **Voer het experiment uit door een ChaosEngine te definiëren**:
-```yaml
-apiVersion: litmuschaos.io/v1alpha1
-kind: ChaosEngine
-metadata:
-  name: pod-delete-engine
-  namespace: litmus
-spec:
-  appinfo:
-    appns: 'frontend'
-    applabel: 'app=frontend'
-    appkind: 'deployment'
-  chaosServiceAccount: litmus-admin
-  experiments:
-    - name: pod-delete
-      spec:
-        components:
-          env:
-            - name: TOTAL_CHAOS_DURATION
-              value: '30'  # duur van de test in seconden
-```
-
-Hiermee wordt het experiment gestart en wordt de geselecteerde pod in de frontend namespace tijdelijk verwijderd om te observeren hoe het systeem reageert (LitmusChaos, 2022).
+3. Verifiëer de verstoring:
+   1. Voer `kubectl get pods -n litmus` uit. Eén van de pods moet de statue 'terminating' hebben. 
+    
 
 ## Hoe pas ik LitmusChaos toe in de PitStop MSA applicatie?
 
@@ -189,8 +120,6 @@ Het biedt een robuuste set aan experimenten waarmee je kunt testen hoe jouw appl
 Door LitmusChaos te integreren in de CI/CD-pijplijn en experimenten te ontwerpen die specifiek gericht zijn op de behoeften van jouw microservice-architectuur, kun je de veerkracht en stabiliteit van jouw systemen aanzienlijk verbeteren.
 In het geval van de PitStop MSA kan LitmusChaos gebruikt worden om mogelijke knelpunten en kwetsbaarheden te identificeren, die anders pas bij een echte storing aan het licht zouden komen.
 Met de juiste configuratie en integratie kan LitmusChaos een onmisbaar onderdeel worden van een DevOps-strategie die zich richt op hoge beschikbaarheid en robuustheid.
-
-## Referenties
 
 ## Referenties
 
