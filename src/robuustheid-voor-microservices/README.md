@@ -10,7 +10,7 @@ In moderne DevOps-omgevingen en microservices-architecturen is stabiliteit en ve
 Om systemen bestand te maken tegen onverwachte fouten en om robuuste systemen te bouwen, wordt steeds vaker chaos engineering ingezet. 
 Deze methodologie helpt teams om niet alleen reactief, maar vooral proactief om te gaan met storingen (Basiri, 2020). 
 In deze blogpost duiken we diep in LitmusChaos, een open-source chaos engineering-tool voor Kubernetes, en onderzoeken we hoe deze efficiënt kan worden toegepast om de robuustheid van microservices te verbeteren. 
-We bespreken de basis van chaos engineering, de unieke rol van LitmusChaos binnen DevOps, en de mogelijkheden voor toepassing in een microservices-omgeving zoals de PitStop MSA.
+We bespreken de basis van chaos engineering, de unieke rol van LitmusChaos binnen DevOps, en de mogelijkheden voor toepassing in een microservices-omgeving.
 
 <hr/>
 
@@ -32,27 +32,24 @@ De tool integreert goed met CI/CD pipelines, waardoor chaos-tests eenvoudig kunn
 Hierdoor kunnen bedrijven proactief chaos engineering implementeren en tegelijkertijd de robuustheid van hun microservices optimaliseren (Kubernetes, 2023).
 
 **Waarom LitmusChaos?**  
-In tegenstelling tot andere tools biedt LitmusChaos een gebruiksvriendelijke GUI en CLI, uitgebreide documentatie en ondersteuning voor Kubernetes-native workflows (LitmusChaos, 2022). 
-Dit maakt het aantrekkelijk voor DevOps-teams die al werken met Kubernetes en een tool zoeken die gemakkelijk kan worden geïntegreerd in bestaande systemen.
-
 Hoewel LitmusChaos populair is, zijn er andere chaos engineering-tools beschikbaar, zoals Gremlin en Chaos Monkey. 
 Elk van deze tools heeft unieke functies en richt zich op verschillende omgevingen en use-cases:
 
 - **Gremlin**: biedt een vergelijkbare set aan verstoringsexperimenten en ondersteunt naast Kubernetes ook andere infrastructuren (Gremlin, 2023).
 - **Chaos Monkey**: ontwikkeld door Netflix, focust op het uitschakelen van services om robuustheid te testen, maar is meer beperkt tot specifieke infrastructuren en biedt minder Kubernetes-georiënteerde verstoringen (Netflix, 2021).
 
-In vergelijking met deze tools heeft LitmusChaos als voordeel dat het Kubernetes-native is, wat het makkelijker maakt om het te gebruiken binnen Kubernetes-omgevingen zonder complexe configuraties (LitmusChaos, 2022).
-
+In tegenstelling tot andere tools biedt LitmusChaos een gebruiksvriendelijke GUI en CLI, uitgebreide documentatie en ondersteuning voor Kubernetes-native workflows (LitmusChaos, 2022).
+Dit maakt het aantrekkelijk voor DevOps-teams die al werken met Kubernetes en een tool zoeken die gemakkelijk kan worden geïntegreerd in bestaande systemen.
 
 Een goed begrip van de sterke en zwakke punten van LitmusChaos helpt bij de beslissing om deze tool te implementeren. 
 Enkele van de belangrijkste voor- en nadelen:
 
-### Voordelen:
+**Voordelen**:
 - **Naadloze Kubernetes-integratie**: Omdat LitmusChaos Kubernetes-native is, biedt het ingebouwde ondersteuning voor pods, namespaces en clusters (Kubernetes, 2023).
 - **Gebruiksvriendelijke interface**: De GUI maakt chaos engineering toegankelijk, zelfs voor teams met beperkte chaos engineering-ervaring (LitmusChaos, 2022).
 - **Uitbreidbaarheid**: LitmusChaos biedt een modulaire structuur, waardoor gebruikers eigen experimenten kunnen toevoegen die aansluiten bij hun specifieke behoeften (LitmusChaos, 2022).
 
-### Nadelen:
+**Nadelen**:
 - **Beperkte multi-cloud ondersteuning**: LitmusChaos werkt het beste in Kubernetes-omgevingen en heeft beperkte integratie met niet-Kubernetes-omgevingen (LitmusChaos, 2022).
 - **Leren van de basis**: Chaos engineering kan complex zijn en LitmusChaos vergt een basiskennis van Kubernetes en microservices-architectuur om optimaal te gebruiken (Gremlin, 2023).
 
@@ -62,11 +59,10 @@ Er is een Agent nodig die er voor zorgt dat de verstoringen uitgevoerd worden.
 Die Agent kan in dezelfde, maar mag ook in een ander Kubernetes cluster draaien (YourTechSimplified, 2024).
 
 Een Agent bestaat uit een `Subscriber`, `Controller` en een `Chaos Exporter`.
-De `Subscriber` ontvangt de instructies van ChaosCenter.
-De `Controller` zorgt ervoor dat een ontvangen workflow wordt uitgevoerd.
-De `Chaos Exporter` maakt de resultaten van de verstoringen in Prometheus formaat.
+De `Subscriber` ontvangt de instructies (een workflow) van ChaosCenter.
+De `Controller` zorgt ervoor dat een ontvangen workflow wordt uitgevoerd en de `Chaos Exporter` maakt de resultaten van de verstoringen in Prometheus formaat.
 
-ChaosWorkflow bestaat uit een `ChaosExperiment`, een `ChaosEngine`, een `ChaosRunner` en een `ChaosResult`.
+Een ChaosWorkflow bestaat uit een `ChaosExperiment`, een `ChaosEngine`, een `ChaosRunner` en een `ChaosResult`.
 De `ChaosExperiment` bevat de verstoringen die uitgevoerd moeten worden.
 De `ChaosEngine` bevat de configuratie van de verstoringen. Dus _hoe_ de verstoringen uitgevoerd moeten worden.
 De `ChaosRunner` zorgt ervoor dat de verstoringen daadwerkelijk uitgevoerd worden.
@@ -77,7 +73,7 @@ De `ChaosResult` bevat de resultaten van de verstoringen.
 In dit hoofdstuk staat hoe LitmusChaos kan worden toegepast in een Kubernetes-omgeving door middel van een POC (Proof Of Concept).
 
 **Stap 1: Installatie van LitmusChaos**  
-Om LitmusChaos te installeren via YAML, kun je de volgende stappen volgen:
+Om LitmusChaos te installeren moeten de volgende stappen worden uitgevoerd:
 
 1. **Maak een Kubernetes namespace aan**:
 
@@ -99,12 +95,12 @@ Nu LitmusChaos is geïnstalleerd, kunnen we een basis experiment configureren om
 Hiervoor gebruiken we een Predefined Workflow.
 Dit is en vooraf gedefinieerde reeks stappen die een specifieke verstoring veroorzaken.
 
-1. Select Workflow:
+1. Workflow kiezen:
    1. Klik op "Schedule a Workflow"
    2. Kies "Self Agent" als target 
    3. Kies "potato-head" als Predefined Workflow en klik op "Next"
    
-2. Tune Experiment:
+2. Experiment wijzigen:
    1. Pas de duur van de verstoring aan
    2. Stel in wanneer de verstoring moet plaatsvinden
 
@@ -112,15 +108,16 @@ De workflow is nu aangemaakt en te zien in het dashboard.
 ![litmusworkflows.png](plaatjes%2Flitmusworkflows.png)
 
 3. Verifiëer de verstoring:
-   1. Voer `kubectl get pods -n litmus` uit. Eén van de pods moet de statue 'terminating' hebben. 
+   1. Voer `kubectl get pods -n litmus` uit. Eén van de pods moet de status 'terminating' hebben. 
 
 ## Conclusie
 
 LitmusChaos is een krachtige tool voor chaos engineering, vooral voor DevOps-teams die werken met microservices in Kubernetes-omgevingen.
 Het biedt een robuuste set aan experimenten waarmee je kunt testen hoe jouw applicaties reageren op onverwachte verstoringen, wat uiteindelijk leidt tot betere stabiliteit en betrouwbaarheid.
 Door LitmusChaos te integreren in de CI/CD-pijplijn en experimenten te ontwerpen die specifiek gericht zijn op de behoeften van jouw microservice-architectuur, kun je de veerkracht en stabiliteit van jouw systemen aanzienlijk verbeteren.
-In het geval van de PitStop MSA kan LitmusChaos gebruikt worden om mogelijke knelpunten en kwetsbaarheden te identificeren, die anders pas bij een echte storing aan het licht zouden komen.
 Met de juiste configuratie en integratie kan LitmusChaos een onmisbaar onderdeel worden van een DevOps-strategie die zich richt op hoge beschikbaarheid en robuustheid.
+Door de WebUI is het toegankelijk voor iedereen, ook voor mensen die geen ervaring hebben met chaos engineering.
+Echter is het wel belangrijk om een goede basis te hebben van Kubernetes en microservices-architectuur.
 
 ## Referenties
 
