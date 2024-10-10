@@ -56,7 +56,7 @@ Enkele van de belangrijkste voor- en nadelen:
 - **Beperkte multi-cloud ondersteuning**: LitmusChaos werkt het beste in Kubernetes-omgevingen en heeft beperkte integratie met niet-Kubernetes-omgevingen (LitmusChaos, 2022).
 - **Leren van de basis**: Chaos engineering kan complex zijn en LitmusChaos vergt een basiskennis van Kubernetes en microservices-architectuur om optimaal te gebruiken (Gremlin, 2023).
 
-LitmusChaos bestaat uit verschillende componenten. 
+LitmusChaos is opgebouwd uit verschillende componenten die samenwerken om chaos-experimenten uit te voeren binnen Kubernetes-omgevingen. 
 Via de WebUI ChaosCenter kan alles worden aangestuurd. 
 Er is een Agent nodig die er voor zorgt dat de verstoringen uitgevoerd worden.
 Die Agent kan in dezelfde, maar mag ook in een ander Kubernetes cluster draaien (YourTechSimplified, 2024).
@@ -113,18 +113,6 @@ De workflow is nu aangemaakt en te zien in het dashboard.
 
 3. Verifiëer de verstoring:
    1. Voer `kubectl get pods -n litmus` uit. Eén van de pods moet de statue 'terminating' hebben. 
-    
-
-## Hoe pas ik LitmusChaos toe in de PitStop MSA applicatie?
-
-LitmusChaos kan een waardevolle rol spelen in de robuustheidstests voor de PitStop Microservices Architectuur (MSA), vooral gezien de complexiteit en onderlinge afhankelijkheden binnen een microservice-omgeving.
-Een effectieve manier om LitmusChaos toe te passen in PitStop is door chaos-experimenten op te zetten die specifieke services verstoren, zoals vertraging in een API of het uitvallen van een database.
-Door deze experimenten kunnen we de fouttolerantie en het herstelvermogen van de applicatie testen en verbeteren.
-LitmusChaos biedt een flexibele opzet waarmee je meerdere experimenten kunt definiëren en deze automatisch kunt laten uitvoeren binnen een CI/CD-pijplijn.
-
-Een voorbeeld van een test in de PitStop MSA zou kunnen zijn om een database-service tijdelijk te verstoren en vervolgens te observeren hoe de andere microservices hiermee omgaan.
-Met LitmusChaos kun je dergelijke experimenten snel inrichten met YAML-configuratiebestanden die je in een CI/CD-workflow kunt integreren.
-Door dit herhaaldelijk te doen tijdens de ontwikkelings- en testfase, kunnen robuustheid en veerkracht van de PitStop MSA continu worden verbeterd.
 
 ## Conclusie
 

@@ -1,0 +1,13 @@
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosEngine
+metadata:
+  name: pod-delete-engine
+  namespace: litmus
+spec:
+  appinfo:
+    appns: litmus
+    applabel: "app.kubernetes.io/name=litmus" # Vervang met de juiste label van je app
+    appkind: deployment
+  chaosServiceAccount: litmus-admin
+  experiments:
+    - name: pod-delete
