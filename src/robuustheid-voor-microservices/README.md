@@ -12,8 +12,6 @@ Deze methodologie helpt teams om niet alleen reactief, maar vooral proactief om 
 In deze blogpost duiken we diep in LitmusChaos, een open-source chaos engineering-tool voor Kubernetes, en onderzoeken we hoe deze efficiënt kan worden toegepast om de robuustheid van microservices te verbeteren. 
 We bespreken de basis van chaos engineering, de unieke rol van LitmusChaos binnen DevOps, en de mogelijkheden voor toepassing in een microservices-omgeving.
 
-<hr/>
-
 ## Chaos Engineering
 
 Chaos engineering is een methodologie voor het bewust creëren van storingen binnen een systeem om te zien hoe het hiermee omgaat. 
@@ -31,7 +29,8 @@ LitmusChaos is specifiek ontwikkeld voor Kubernetes-omgevingen en biedt uitgebre
 De tool integreert goed met CI/CD pipelines, waardoor chaos-tests eenvoudig kunnen worden toegevoegd aan bestaande DevOps-processen. 
 Hierdoor kunnen bedrijven proactief chaos engineering implementeren en tegelijkertijd de robuustheid van hun microservices optimaliseren (Kubernetes, 2023).
 
-**Waarom LitmusChaos?**  
+### Waarom LitmusChaos?
+
 Hoewel LitmusChaos populair is, zijn er andere chaos engineering-tools beschikbaar, zoals Gremlin en Chaos Monkey. 
 Elk van deze tools heeft unieke functies en richt zich op verschillende omgevingen en use-cases:
 
@@ -44,12 +43,14 @@ Dit maakt het aantrekkelijk voor DevOps-teams die al werken met Kubernetes en ee
 Een goed begrip van de sterke en zwakke punten van LitmusChaos helpt bij de beslissing om deze tool te implementeren. 
 Enkele van de belangrijkste voor- en nadelen:
 
-**Voordelen**:
+### Voordelen
+
 - **Naadloze Kubernetes-integratie**: Omdat LitmusChaos Kubernetes-native is, biedt het ingebouwde ondersteuning voor pods, namespaces en clusters (Kubernetes, 2023).
 - **Gebruiksvriendelijke interface**: De GUI maakt chaos engineering toegankelijk, zelfs voor teams met beperkte chaos engineering-ervaring (LitmusChaos, 2022).
 - **Uitbreidbaarheid**: LitmusChaos biedt een modulaire structuur, waardoor gebruikers eigen experimenten kunnen toevoegen die aansluiten bij hun specifieke behoeften (LitmusChaos, 2022).
 
-**Nadelen**:
+### Nadelen
+
 - **Beperkte multi-cloud ondersteuning**: LitmusChaos werkt het beste in Kubernetes-omgevingen en heeft beperkte integratie met niet-Kubernetes-omgevingen (LitmusChaos, 2022).
 - **Leren van de basis**: Chaos engineering kan complex zijn en LitmusChaos vergt een basiskennis van Kubernetes en microservices-architectuur om optimaal te gebruiken (Gremlin, 2023).
 
@@ -114,8 +115,10 @@ De workflow is nu aangemaakt en te zien in het dashboard.
 
 LitmusChaos is een krachtige tool voor chaos engineering, vooral voor DevOps-teams die werken met microservices in Kubernetes-omgevingen.
 Het biedt een robuuste set aan experimenten waarmee je kunt testen hoe jouw applicaties reageren op onverwachte verstoringen, wat uiteindelijk leidt tot betere stabiliteit en betrouwbaarheid.
+
 Door LitmusChaos te integreren in de CI/CD-pijplijn en experimenten te ontwerpen die specifiek gericht zijn op de behoeften van jouw microservice-architectuur, kun je de veerkracht en stabiliteit van jouw systemen aanzienlijk verbeteren.
 Met de juiste configuratie en integratie kan LitmusChaos een onmisbaar onderdeel worden van een DevOps-strategie die zich richt op hoge beschikbaarheid en robuustheid.
+
 Door de WebUI is het toegankelijk voor iedereen, ook voor mensen die geen ervaring hebben met chaos engineering.
 Echter is het wel belangrijk om een goede basis te hebben van Kubernetes en microservices-architectuur.
 
